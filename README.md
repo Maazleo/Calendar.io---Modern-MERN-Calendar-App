@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Calendar.io - Modern MERN Calendar App
 
 A full-featured, production-ready calendar application built with the MERN stack (MongoDB, Express.js, React, Node.js). Includes JWT authentication, email reminders, event filtering, and a beautiful, responsive UI.
@@ -143,3 +144,7 @@ MIT License
 ---
 
 **Happy Scheduling!** 
+=======
+# Calendar.io---Modern-MERN-Calendar-App
+A full-featured, production-ready calendar application built with the MERN stack (MongoDB, Express.js, React, Node.js). Includes JWT authentication, email reminders, event filtering, and a beautiful, responsive UI.
+>>>>>>> 6f535647f424a366b9b98c0581582a34d1c97c52
