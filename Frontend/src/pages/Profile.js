@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { IoPersonOutline, IoMailOutline, IoLockClosedOutline, IoSettingsOutline } from 'react-icons/io5';
+import { IoPersonOutline, IoLockClosedOutline, IoSettingsOutline } from 'react-icons/io5';
 import Button from '../components/ui/Button';
 
 const Profile = () => {

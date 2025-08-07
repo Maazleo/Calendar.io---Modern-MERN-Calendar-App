@@ -7,7 +7,6 @@ import {
   IoAddOutline,
   IoFilterOutline
 } from 'react-icons/io5';
-import Button from '../ui/Button';
 
 const Sidebar = () => {
   const location = useLocation();

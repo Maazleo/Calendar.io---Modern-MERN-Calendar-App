@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -25,7 +25,7 @@ export const EventProvider = ({ children }) => {
   });
 
   // Fetch all events
-  const fetchEvents = async (params = {}) => {
+  const fetchEvents = useCallback(async (params = {}) => {
     setLoading(true);
     try {
       const queryParams = new URLSearchParams({
@@ -43,10 +43,10 @@ export const EventProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
   // Fetch upcoming events
-  const fetchUpcomingEvents = async (limit = 10) => {
+  const fetchUpcomingEvents = useCallback(async (limit = 10) => {
     try {
       const response = await axios.get(`/api/events/upcoming?limit=${limit}`);
       setUpcomingEvents(response.data.data.events);
@@ -55,7 +55,7 @@ export const EventProvider = ({ children }) => {
       console.error('Error fetching upcoming events:', error);
       return [];
     }
-  };
+  }, []);
 
   // Create new event
   const createEvent = async (eventData) => {
@@ -189,14 +189,14 @@ export const EventProvider = ({ children }) => {
   useEffect(() => {
     fetchEvents();
     fetchUpcomingEvents();
-  }, []);
+  }, [fetchEvents, fetchUpcomingEvents]);
 
-  // Refetch events when filters change
+  // Fetch events when filters change
   useEffect(() => {
     if (Object.values(filters).some(value => value !== null && value !== '')) {
       fetchEvents();
     }
-  }, [filters]);
+  }, [filters, fetchEvents]);
 
   const value = {
     events,

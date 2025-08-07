@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useEvents } from '../contexts/EventContext';
-import { IoAddOutline, IoFilterOutline, IoSearchOutline } from 'react-icons/io5';
+import { IoAddOutline, IoFilterOutline } from 'react-icons/io5';
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
 import EventForm from '../components/events/EventForm';
@@ -14,7 +14,7 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 const localizer = momentLocalizer(moment);
 
 const Calendar = () => {
-  const { events, loading, fetchEvents, createEvent, updateEvent, deleteEvent } = useEvents();
+  const { events, loading, createEvent, updateEvent, deleteEvent } = useEvents();
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showEventForm, setShowEventForm] = useState(false);
   const [showEventDetails, setShowEventDetails] = useState(false);
@@ -40,7 +40,7 @@ const Calendar = () => {
   };
 
   // Handle slot selection (create new event)
-  const handleSelectSlot = ({ start, end, slots }) => {
+  const handleSelectSlot = useCallback(({ start, end, slots }) => {
     const newEvent = {
       start: start,
       end: end,
@@ -48,10 +48,10 @@ const Calendar = () => {
     };
     setEditingEvent(newEvent);
     setShowEventForm(true);
-  };
+  }, []);
 
   // Handle event creation/update
-  const handleSaveEvent = async (eventData) => {
+  const handleSaveEvent = useCallback(async (eventData) => {
     if (editingEvent && editingEvent._id) {
       // Update existing event
       await updateEvent(editingEvent._id, eventData);
@@ -61,23 +61,23 @@ const Calendar = () => {
     }
     setShowEventForm(false);
     setEditingEvent(null);
-  };
+  }, [editingEvent, updateEvent, createEvent]);
 
   // Handle event deletion
-  const handleDeleteEvent = async (eventId) => {
+  const handleDeleteEvent = useCallback(async (eventId) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
       await deleteEvent(eventId);
       setShowEventDetails(false);
       setSelectedEvent(null);
     }
-  };
+  }, [deleteEvent]);
 
   // Handle event edit
-  const handleEditEvent = () => {
+  const handleEditEvent = useCallback(() => {
     setEditingEvent(selectedEvent);
     setShowEventDetails(false);
     setShowEventForm(true);
-  };
+  }, [selectedEvent]);
 
   // Event styling
   const eventStyleGetter = (event) => {

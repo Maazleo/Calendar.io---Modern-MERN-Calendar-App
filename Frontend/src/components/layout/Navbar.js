@@ -8,7 +8,6 @@ import {
   IoMenuOutline,
   IoNotificationsOutline
 } from 'react-icons/io5';
-import Button from '../ui/Button';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
