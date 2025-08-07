@@ -9,9 +9,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # dotenv environment variables
-.env
-.env.*
-config.env
 
 # Build output
 build/
